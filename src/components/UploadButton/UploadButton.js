@@ -41,7 +41,7 @@ class UploadButton extends React.Component {
             // signingUrlQueryParams: {uploadType: 'avatar'},
         }
 
-        const s3Url = 'https://siid.s3.amazonaws.com'
+        const s3Url = 'https://siidtool.s3.amazonaws.com'
 
         return (
             <DropzoneS3Uploader

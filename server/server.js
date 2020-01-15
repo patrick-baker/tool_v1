@@ -49,8 +49,8 @@ app.use('/category', categoryRouter);
 // To lookup what your region variable is goto:
 // https://amzn.to/2NtySt0
 app.use('/s3', uploadS3Router({
-    bucket: 'siid',                           // Name of bucket
-    region: 'us-east-2',                            // Lookup variable that matches your region. This is Ohio
+    bucket: 'siidtool',                                  // Name of bucket
+    region: 'us-east-2',                                 // Lookup variable that matches your region. This is Ohio
     headers: {'Access-Control-Allow-Origin': '*'},  
     ACL: 'public-read',                                 // this is the default - set to `public-read` to let anyone view uploads
   }));
