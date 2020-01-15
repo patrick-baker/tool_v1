@@ -70,7 +70,7 @@ let getData = async (text) => {
 const getBias = async (sentence) => {
     let token = await sh('gcloud auth application-default print-access-token');
     authToken = 'Bearer ' + token.stdout.replace(/\s/g, '');
-    let bias = await axios.post('https://automl.googleapis.com/v1beta1/projects/742916648841/locations/us-central1/models/TCN2299637365586526208:predict',
+    let bias = await axios.post('https://automl.googleapis.com/v1/projects/742916648841/locations/us-central1/models/TCN2279960505495846912:predict',
         {
             "payload": {
                 "textSnippet": {
@@ -87,7 +87,7 @@ const getBias = async (sentence) => {
     );
 
     if (bias.data.payload[0].displayName == 'biased') {
-        let biasCategory = await axios.post('https://automl.googleapis.com/v1beta1/projects/742916648841/locations/us-central1/models/TCN2279960505495846912:predict',
+        let biasCategory = await axios.post('https://automl.googleapis.com/v1/projects/742916648841/locations/us-central1/models/TCN2279960505495846912:predict',
             {
                 "payload": {
                     "textSnippet": {
