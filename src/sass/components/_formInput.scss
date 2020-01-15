@@ -1,0 +1,89 @@
+.formInput {
+
+    &__large {
+        display: inline-block;
+        color:rgb(32, 32, 32);
+        resize: none;
+        height:9rem;
+        width:35rem;
+        font-size: 1.2rem;
+        border-style: none;
+        border:1px solid $color-neutral-blue;
+        border-radius:4px;
+        padding:2%;
+        &:focus {
+            outline: none;
+            box-shadow: 1px 1px 10px -8px #363636;
+        }
+    }
+
+    &__average {
+        box-shadow: 0 6px 8px -8px #363636;
+        display: inline-block;
+        color:rgb(32, 32, 32);
+        padding:2.3%;
+        margin-top: 2%;
+        margin-bottom:2%;
+        width:100%;
+        border-style: none;
+        border:1px solid $color-neutral-blue;
+        border-radius:4px;
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__labelText {
+        font-size: 1.3rem;
+        padding:.5%;
+        display:inline-block;
+    }
+
+    &__submitButton {
+        // position:absolute;
+        // bottom:15%;
+        // left:30%;
+        margin: auto;
+        padding:1rem;
+        padding-left:1.5rem;
+        padding-right:1.5rem;
+        width:7rem;
+        font-size: 1.3rem;;
+        background-color:$color-neutral-blue;
+        color:rgb(241, 241, 241);
+        border-radius: 4px;
+
+        &:hover {
+            cursor: pointer;
+            border:1px solid rgb(247, 247, 247);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }   
+
+    &__specialtyDisplay {
+        list-style: none;
+        display: inline-block;
+        font-size: 1.3rem;
+        padding: 1%;
+
+        &:hover {
+            cursor: pointer;
+            color:rgb(156, 0, 0);
+        }
+    }
+
+    &__project-form {
+        height:1.5rem;
+        width: 13rem;
+        padding:.5rem;
+    }
+
+    &__report-textarea {
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+    }
+}

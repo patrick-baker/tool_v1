@@ -1,0 +1,87 @@
+.login {
+    &__main {
+        text-align: center;
+        height:100vh;
+        width:100vw;
+        margin:0;
+        padding:0;
+        padding-top:4.5rem;
+        background: rgb(243, 243, 243);
+    }
+
+    &__header {
+        color:$color-neutral-blue;
+        font-size: 4rem;
+    }
+
+
+    &__input {
+        box-shadow: 0 6px 8px -8px #363636;
+        width:17rem;
+        height:2rem;
+        border-radius: 4px;
+        border-style: none;
+        border:1px solid $color-neutral-blue;
+        font-size:14px;
+        padding:.5rem;
+        background-color: $color-pastel-blue;
+        color:rgb(32, 32, 32);
+        margin:1%;
+
+        &:focus {
+            outline:none;
+        }
+
+
+
+    }
+
+    &__inputLabel {
+        text-align: right;
+        display:inline-block;
+        width:14rem;
+        font-size:14px;
+        color:rgb(32, 32, 32);
+        padding:1%;
+        padding-right:0;
+    }
+
+    &__loginButton {
+        display:inline-block;
+        margin:1rem;
+        border-style: none;
+        background-color: $color-neutral-blue;
+        color:rgb(241, 241, 241);
+        padding:1rem;
+        padding-left:2rem;
+        padding-right:2rem;
+        border:none;
+        border-radius:4px;
+
+        box-shadow: 0 6px 8px -8px #363636;
+
+        &:hover {
+            box-shadow: 0 6px 8px -6px #363636;
+            cursor: pointer;
+            background-color:rgb(86, 93, 194);
+        }
+
+        &:focus {
+            outline:none;
+        }
+    }
+
+
+    &__forgotPassword {
+        color:rgb(20, 20, 68);
+
+        &:hover {
+            cursor: pointer;
+            border-bottom: 1px solid rgb(20, 20, 68);;
+        }
+    }
+
+    
+}
+
+

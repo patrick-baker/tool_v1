@@ -1,0 +1,165 @@
+body {
+  font-family: $open-sans;
+  color: $color-black;
+  background-color:#f3f3f3
+}
+
+.heading-primary {
+  font-size: 3.8rem;
+  font-weight: normal;
+  line-height: 4rem;
+  margin-top:2rem;
+  margin-bottom:2rem;
+  color:$color-neutral-blue;
+
+}
+
+.heading-secondary {
+  font-size: 2.4rem;
+  font-weight: normal;
+  line-height: 2.8rem;
+}
+
+.heading-tertiary {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 2.4rem;
+}
+
+.body-bold {
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 2rem;
+}
+
+.body-normal {
+  font-size: 1.6rem;
+  font-weight: normal;
+  line-height: 2rem;
+}
+
+.label {
+  font-size: 1.4rem;
+  font-weight: bolder;
+  line-height: 2.4rem;
+}
+.datum{
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 2.4rem;
+  color: #5B63DA;
+}
+
+.problem{
+  font-size: 1.5rem;
+}
+.message{
+  font-size: 1rem;
+}
+
+.report{
+  &__header1{
+    color:#5B63DA;
+    font-size: 3.8rem;
+    font-weight: normal;
+    line-height: 5rem;
+    border-bottom:1px solid #5B63DA;
+    display:block;
+    padding:.75rem;
+    width:100%
+  }
+
+
+  &__header2{
+    display:inline-block;
+    padding:.75rem;
+    font-size: 2rem;
+    font-weight: normal;
+    line-height: 2.8rem;
+
+    &__noMargin {
+      padding: 0rem;
+    }
+
+    &__noInline{
+    padding:.75rem;
+    font-size: 2rem;
+    font-weight: normal;
+    line-height: 2.8rem;
+    }
+  }
+
+  &__header3{
+    display:inline-block;
+    padding:.75rem;
+    font-size: 1.7rem;
+    font-weight: normal;
+    line-height: 2rem;
+  }
+
+  // &__description {
+  //   display:block;
+  //   padding:.75rem;
+  //   font-size: 1.4rem;
+  //   font-weight: normal;
+  //   line-height: 1.6rem;
+  //   width:50%;
+  // }
+
+  &__flexBox {
+    display:flex;
+  }
+
+  &__goalsData {
+    margin:0 0 0 1rem;
+    font-size: 1.5rem;
+    line-height: 1.7rem;
+
+    &__noMargin {
+      margin: 0rem;
+    }
+  }
+
+}
+
+.caption {
+  color:rgb(31, 31, 31);
+  margin-left:5%;
+  margin-right:5%;
+  font-size: 1.2rem;
+  font-weight: normal;
+  line-height: 1.6rem;
+}
+
+.project {
+  &__title {
+    margin:5%;
+    margin-right: 15px;
+    // margin-left: 25px;  // was there to prevent corner from overlapping
+    color: $color-primary-blue;
+  }
+
+  &__client {
+    color:rgb(31, 31, 31);
+    margin:5%;
+  }
+
+  &__date {
+    position: absolute;
+    left:1.35rem;
+    bottom:4.5rem;
+    color:rgb(158, 158, 158);
+  }
+}
+
+.errorMessage {
+  color:rgb(255, 66, 107);
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.italicize {
+  font-style: italic;
+}
