@@ -19,13 +19,7 @@ class UploadButton extends React.Component {
     componentDidMount = () => {
         this.setState({ url: this.props.currentImage })
     }
-    // innerEl = (
-    //     <div className="card__imageContainerSmall">
-    //         {this.state.url ?
-    //             <img className="card__image" src={this.props.currentImage} /> :
-    //             <p className="card__description" style={{ marginLeft: '10px' }} >Click to Upload or Drag File Here</p>}
-    //     </div>
-    // )
+  
     handleFinishedUpload = info => {
         console.log("info from uploadButton", info)
         // console.log('File uploaded with filename', info.filename)
@@ -37,15 +31,14 @@ class UploadButton extends React.Component {
     }
     render() {
         const uploadOptions = {
-            server: 'http://localhost:5000',
-            // signingUrlQueryParams: {uploadType: 'avatar'},
+            server: 'https://siid-tool.herokuapp.com/'
         }
 
         const s3Url = 'https://siidtool.s3.amazonaws.com'
 
         return (
             <DropzoneS3Uploader
-                // style={{previewImage: ''||this.props.currentImage}}
+                
                 children={(
                     <div className="card__imageContainerSmall">
                         {this.state.url ?
