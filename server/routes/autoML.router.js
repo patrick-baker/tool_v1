@@ -107,6 +107,8 @@ const getBias = async (sentence) => {
         if (biasCategory.data.payload[0].displayName == 'good') {
             biasCategory.data.payload[0].displayName = biasCategory.data.payload[1].displayName
         }
+        
+        console.log("bias data is:", biasCategory.data)
         console.log('BIAS CATEGORY', biasCategory.data.payload[0].displayName)
         return biasCategory.data.payload[0].displayName;
     } else {
