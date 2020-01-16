@@ -1,35 +1,9 @@
 # SIID - Social Impact IDentification tool
 
-## Prerequisites
+## Description
+_Duration: 3-Week Sprint_
 
-Before you get started, make sure you have the following software installed on your computer:
-
-- [Node.js](https://nodejs.org/en/)
-- [PostrgeSQL](https://www.postgresql.org/)
-- [Nodemon](https://nodemon.io/)
-
-Next you'll need a Google account and Google Cloud Console running on your computer
-1. The SIID model is the Google Cloud Platform project (named Rankchoice) if you are using this ML model get access from SIID. If you are using a different one you'll need to update the cloud console endpoint in the /server/routes/autoML.router.js 
-2. Once your google account is associated with the SIID model, or another model, you'll need to setup the Cloud Console on your local machine. [Quick Start](https://cloud.google.com/sdk/docs/quickstart-macos)
-3. Make sure you follow the instructions that include both the .json key in your PATH variable, and update your .bash_profile so Google can access the console.  If you are seeing a `gcloud auth ...` error double check these settings.
-
-
-
-## Create database and table
-
-Create a new database called `SIID` and use the `database.sql` file to re-create the database.
-You will also want to import the rules by running the SQL commands in the `/ruleset_sql_files` folder.
-
-# Prime Project
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
-
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
-
-## Download (Don't Clone) This Repository
-
-* Don't Fork or Clone. Instead, click the `Clone or Download` button and select `Download Zip`.
-* Unzip the project and start with the code in that folder.
-* Create a new GitHub project and push this code to the new repository.
+SIID is a web application that allows marketing teams to input their strategy documents or ad copy and generate a report about possible areas of sensitivity in their concepts and language. This app uses a rule based engine (ReText) to scan the text for words that may carry bias, and suggest replacements as well as a machine learning engine (AutoML) that evaluates sentences for sensitive sentiment. The final report contains data visualization (D3.js) to quickly give the marketing team the ability to assess the overall tone and re-consider how this aligns with the brand, campaign goals, and target demographic.
 
 ## Prerequisites
 
@@ -38,105 +12,187 @@ Before you get started, make sure you have the following software installed on y
 - [Node.js](https://nodejs.org/en/)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
+- [Postico](https://eggerapps.at/postico/) Or a similar PostgreSQL GUI
 
-## Create database and table
 
-Create a new database called `prime_app` and create a `user` table:
+## Steps
+0. Git Clone
+1. NPM Install
+2. Google Cloud setup
+3. AWS Bucket setup
+4. Database setup
+5. Setup .env file
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
+# 0. GIT Clone
+1. Clone this repository on to your local machine.
+
+# 1. Installation
+
+1. Get to main project directory in command line, assuming node is installed, and type in `npm install` to install required dependencies.
+
+# 2. Google Cloud 
+
+You'll need a Google account and Google Cloud Console running on your computer
+
+1. The SIID model is on the Google Cloud Platform  (project named Rankchoice) if you are using this ML model get access from SIID. If you are using a different one you'll need to update the cloud console endpoint in the `/server/routes/autoML.router.js`. The SIID project uses two different models, the first returns "biased" "good", the second returns a category. You'll need to update these in the `autoML.router.js` file  or put in your own models.
+    - You'll find the information you need to paste in in the "Test & Use" tab starts with `https://automl...` ends with `...predict`
+2. Once your google account is associated with the SIID project, or a similar project, you'll need to setup the Cloud Console on your local machine. [Quick Start](https://cloud.google.com/sdk/docs/quickstart-macos)
+    - Start at step 2 ( You already have a model! )
+    - Be sure to follow the "optional" step 5 where you run install.sh
+    - Continue on to initialize the sdk
+3. Next edit your bash_profile to point to your key.json file.
+    - put a line like this above the other Google cloud commands.
+    - export GOOGLE_APPLICATION_CREDENTIALS="/Users/username/folderwithkey/key.json"
+    - more info found [Google Authentication Setup](https://cloud.google.com/docs/authentication/getting-started)
+
+
+## Common Errors with gcloud
+1. If you are seeing a `gcloud auth ...` error double check the gcloud init settings, Cloud Console permissions, and your .bash_profile path to the key.json file.  
+2. If you are getting an ASCII error, you likely copied and pasted the key.json path. Retype this by hand in .bash_profile and delete the old line.
+
+# 3. AWS Management Console
+
+We'll be using S3 and IAM
+We'll setup the Group, Then the bucket, then the user. 
+
+## At Find Services type IAM
+Click IAM and then on the left select Groups
+
+Step 1 : Group Name
+Click "Create New Group"
+Give it a group name
+
+Step 2:
+Policy Type: (select both)
+
+AmazonECS_FullAccess
+
+AMAZONS3_FullAccess
+
+Step 3:
+Click "Create Group"
+
+## At Find Services type S3
+Click create bucket
+Step 1:
+Give the bucket a name
+Note the region
+
+Step 2: Configure
+Press Next
+
+Step 3: Permissions
+Uncheck "block all public access"
+
+Step 4: Review
+Click Create Bucket
+
+You've made a bucket!!
+Now click on the bucket. Goto Permissions Tab. Go to CORS configuration tab.
+Put in the default:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+<CORSRule>
+    <AllowedOrigin>*</AllowedOrigin>
+    <AllowedMethod>GET</AllowedMethod>
+    <AllowedMethod>POST</AllowedMethod>
+    <AllowedMethod>PUT</AllowedMethod>
+    <AllowedHeader>*</AllowedHeader>
+</CORSRule>
+</CORSConfiguration>
 ```
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+Press "Save"
 
-## Development Setup Instructions
+## Add user
 
-* Run `npm install`
-* Create a `.env` file at the root of the project and paste this line into the file:
-    ```
-    SERVER_SESSION_SECRET=superDuperSecret
-    ```
-    While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-* Start postgres if not running already by using `brew services start postgresql`
-* Run `npm run server`
-* Run `npm run client`
-* Navigate to `localhost:3000`
+## Create User
+Create a user name
+AWS access type is "Programmatic Access"
 
-## Debugging
+## Permissions
+Add user to group you created earlier
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
+## Tags
+Click "next
 
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
+## Review
+Click "Create User"
 
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
+Your Access Key is displayed we need our: Access key ID & Secret Access Key copy to your .env file. You cannot revisit this but if you need you can delete the file and "Create Access Key"  if you lose it or missed the chance.
 
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
+## Update the code with the credentials
+.env
+AWS_ACCESS_KEY_ID= (the ID we just made)
+AWS_SECRET_ACCESS_KEY= (the secret key we just made)
 
+/server/server.js
+At the bottom of the file you'll find
+bucket:  (name of bucket)
+region: (code of region. 'us-east-2' is Ohio but if you have a different one look at link in comments)
 
-## Testing Routes with Postman
+/src/components/UploadButton/UploadButton.js
+set the `const s3Url = 'https://(name of bucket).s3.amazonaws.com'`
+If deploying to Heroku set the server variable to your Heroku project's path.
 
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum. 
-
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
-
-1. Start the server - `npm run server`
-2. [Import the sample routes JSON file](./PostmanPrimeSoloRoutes.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-    1. `POST /api/user/register` registers a new user, see body to change username/password
-    2. `POST /api/user/login` will login a user, see body to change username/password
-    3. `GET /api/user` will get user information, by default it's not very much
-
-After running the login route above, you can try any other route you've created that requires a logged in user!
+## Common issues with S3 setup
+1. Be sure the user with the associated Amazon KEY_ID and ACCESS_KEY has S3 permissions
+2. Do not put a forward slash at the end of your `server` or `s3url` paths
 
 
-## Production Build
+# 4. Create database and table
 
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
+Create a new postgres database called `SIID` and use the `database.sql` file to re-create the database.
+You will also want to import the rules by running the SQL commands in the `/ruleset_sql_files` folder.  If you are installing it on Heroku install the Heroku Postgres resource and set the database up here.  
 
-* Start postgres if not running already by using `brew services start postgresql`
-* Run `npm start`
-* Navigate to `localhost:5000`
+## Make An Admin
+Register an administrator and then change their admin status in the user table to TRUE using postico or another postgresql gui.
 
-## Lay of the Land
+# 5. Setting Up Your .ENV File
+0. Rename the .env-dist file to .env and you'll need to fill the values in. This is a file that is excluded from GitHub so it isn't pushed to the internet.
 
-* `src/` contains the React application
-* `public/` contains static assets for the client-side
-* `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-* `server/` contains the Express App
+1. Retrieve a randomly generated password of 16 or more characters and set your SERVER_SESSION_SECRET as such:
 
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
+```SERVER_SESSION_SECRET=RandomStr1ng```
 
-* src/components
-  * App/App
-  * Footer/Footer
-  * Nav/Nav
-  * AboutPage/AboutPage
-  * InfoPage/InfoPage
-  * UserPage/UserPage
-  * LoginPage/LoginPage
-  * RegisterPage/RegisterPage
-  * LogOutButton/LogOutButton
-  * ProtectedRoute/ProtectedRoute
+2. Create a gmail account and set email and password environment variables as such (you'll need to alter gmail settings later, see below):
 
-## Deployment
+```EMAIL_ADDRESS=EmailAddress@gmail.com```
 
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
+```EMAIL_PASSWORD=RandomStr1ng```
 
-## Update Documentation
+3. After creating your AWS account, make environment variables of your access key id and secret access key as such:
 
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+```AWS_ACCESS_KEY_ID=keyId```
+
+```AWS_SECRET_ACCESS_KEY=key```
+
+## Alter Settings of Gmail Account to Allow Nodemailer to Use it
+1. Disable two-step verification by going [here](myaccount.google.com), then click security on the left, and disabling 2-step verification.
+2. Allow less secure apps [here](https://myaccount.google.com/lesssecureapps?pli=1) 
+
+# Usage
+
+1. After logging in, users will be brought to their ```home``` page, which will list all of their projects.
+2. Clicking on the ```create``` button will allow the user to enter the project form, where they will create all of the project metadata and analyze the text of their strategy document.
+3. After analysis, a project report will generate, which shows project metadata, data visualization of the analysis findings and suggested experts which match the highest occurences of insensitivities, as well as an option for the user to reanalyze a reiteration of the strategy doc.
+4. Back on the ```home``` page, a user can view a past report by clicking the report button on a given project.
+5. The ```expert``` view shows all of the experts in the database, including information on their specialties, their contact info, and their bio.
+6. Admins can edit and delete experts in the ```expert``` view.
+7. Admins can also enter the ```rules``` view to add or delete rules which the rules-based system uses to flag potentially insensitive words or phrases for the report.
 
 
-## TO_DO
+## Built With
+- _node.js_
+- _Express.js_
+- _React_ 
+- _Redux_
+- _Redux-Sagas_
+- _postgreSQL_
+- _MaterialUI_
+- _AWS-S3Buckets_
 
-### Patrick
+
+---
+
