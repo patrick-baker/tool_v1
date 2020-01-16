@@ -24,7 +24,7 @@ class UploadButton extends React.Component {
         console.log("info from uploadButton", info)
         // console.log('File uploaded with filename', info.filename)
         // console.log('Access it on s3 at', info.fileUrl)
-        // this.props.dispatch({type:'POST_IMAGE', payload: info.fileUrl})
+        
         this.setState({ url: info.fileUrl })
         this.props.handleChangeImage(info.fileUrl)
 
