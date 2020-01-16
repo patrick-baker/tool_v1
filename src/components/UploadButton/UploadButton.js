@@ -20,7 +20,6 @@ class UploadButton extends React.Component {
         this.setState({ url: this.props.currentImage })
     }
   
-    
     handleFinishedUpload = info => {
         console.log("info from uploadButton", info)
         // console.log('File uploaded with filename', info.filename)
