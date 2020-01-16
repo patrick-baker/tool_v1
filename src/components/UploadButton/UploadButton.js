@@ -31,7 +31,7 @@ class UploadButton extends React.Component {
     }
     render() {
         const uploadOptions = {
-            server: 'https://siid-tool.herokuapp.com/'
+            server: 'https://siid-tool.herokuapp.com'
         }
 
         const s3Url = 'https://siidtool.s3.amazonaws.com'
