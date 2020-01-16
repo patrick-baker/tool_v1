@@ -3,6 +3,8 @@
 .DS_STORE/
 
 # Secure key don't share
+gcloud.json
+gcloud_new.json
 
 
 # Logs
