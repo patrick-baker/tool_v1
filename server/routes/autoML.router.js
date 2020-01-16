@@ -10,6 +10,7 @@ async function sh(cmd) {
     return new Promise(function (resolve, reject) {
         exec.exec(cmd, (err, stdout, stderr) => {
             if (err) {
+                console.log("ERROR in sh",err)
                 reject(err);
             } else {
                 resolve({ stdout, stderr });
@@ -54,6 +55,7 @@ let getData = async (text) => {
             if (sentence) {
                 let sentenceData = await getBias(sentence);
                 if (sentenceData != 'NO BIAS') {
+                    console.log("ML is getting back:",sentenceData)
                     biasCounter[sentenceData]++;
                 }
                 biasCounter['total']++;
@@ -68,6 +70,7 @@ let getData = async (text) => {
 
 
 const getBias = async (sentence) => {
+    console.log("in getBias with", sentence)
     let token = await sh('gcloud auth application-default print-access-token');
     authToken = 'Bearer ' + token.stdout.replace(/\s/g, '');
     let bias = await axios.post('https://automl.googleapis.com/v1/projects/742916648841/locations/us-central1/models/TCN2279960505495846912:predict',
