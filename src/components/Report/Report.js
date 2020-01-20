@@ -80,7 +80,7 @@ class Report extends Component {
                             <div className="report">
                                 {/* Project title, client, date and description */}
                                 <div className="report__header">
-                                    <Header url={`http://localhost:3000/#/report/${this.props.match.params.id}/${this.props.match.params.token}`} />
+                                    <Header url={`http://www.Siidtechnology.com/#/report/${this.props.match.params.id}/${this.props.match.params.token}`} />
                                 </div>
 
                                 {/* <div className="report__header__dateClient" style={{ display: 'inline-block', border: '1px solid black' }}> */}
